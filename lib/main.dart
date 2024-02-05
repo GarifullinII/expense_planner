@@ -1,3 +1,4 @@
+import 'package:expense_planner/transaction.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,13 +16,34 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
+
+  final List<Transaction> transactions = [
+    Transaction(
+      id: 't1',
+      title: 'Молоко',
+      amount: 98.20,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'ПК',
+      amount: 200100,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'Мыло',
+      amount: 68.90,
+      date: DateTime.now(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +54,22 @@ class MyHomePage extends StatelessWidget {
       body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Card(
-            elevation: 4,
-            child: Padding(
-              padding: EdgeInsets.all(4),
-              child: Text('ДИАГРАММА РАСХОДОВ'),
+          Padding(
+            padding: EdgeInsets.only(left: 4, top: 4, right: 4),
+            child: Card(
+              elevation: 4,
+              child: Padding(
+                padding: EdgeInsets.all(4),
+                child: Text('ДИАГРАММА РАСХОДОВ'),
+              ),
             ),
           ),
-          Card(
-            elevation: 4,
-            child: Text('СПИСОК ТРАНЗАКЦИЙ'),
+          Padding(
+            padding: EdgeInsets.all(4),
+            child: Card(
+              elevation: 4,
+              child: Text('СПИСОК ТРАНЗАКЦИЙ'),
+            ),
           )
         ],
       ),
