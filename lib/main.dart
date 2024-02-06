@@ -46,6 +46,9 @@ class MyHomePage extends StatelessWidget {
     ),
   ];
 
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,16 +81,18 @@ class MyHomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 4),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
                     child: TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: const InputDecoration(labelText: 'Title'),
+                      controller: titleController,
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 4),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
                     child: TextField(
-                      decoration: InputDecoration(labelText: 'Amount'),
+                      decoration: const InputDecoration(labelText: 'Amount'),
+                      controller: amountController,
                     ),
                   ),
                   Padding(
