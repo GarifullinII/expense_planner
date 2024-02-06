@@ -51,10 +51,10 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('expense planner'),
       ),
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 4, top: 4, right: 4),
             child: Card(
               elevation: 4,
@@ -65,12 +65,48 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(4),
-            child: Card(
-              elevation: 4,
-              child: Text('СПИСОК ТРАНЗАКЦИЙ'),
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              children: transactions.map((transaction) {
+                return Card(
+                  shape: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                  borderOnForeground: true,
+                  elevation: 4,
+                  color: Colors.orangeAccent,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 16,
+                          ),
+                          child: Text('${transaction.amount} руб.'),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Text(transaction.title),
+                            ),
+                            Text('${transaction.date}'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }).toList(),
             ),
-          )
+          ),
         ],
       ),
     );
