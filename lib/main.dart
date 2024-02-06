@@ -1,5 +1,6 @@
 import 'package:expense_planner/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,19 +28,19 @@ class MyHomePage extends StatelessWidget {
   final List<Transaction> transactions = [
     Transaction(
       id: 't1',
-      title: 'Молоко',
+      title: 'Milk',
       amount: 98.20,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't2',
-      title: 'ПК',
+      title: 'PC',
       amount: 200100,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't3',
-      title: 'Мыло',
+      title: 'Soap',
       amount: 68.90,
       date: DateTime.now(),
     ),
@@ -60,7 +61,43 @@ class MyHomePage extends StatelessWidget {
               elevation: 4,
               child: Padding(
                 padding: EdgeInsets.all(4),
-                child: Text('ДИАГРАММА РАСХОДОВ'),
+                child: Text('COST CHART'),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Card(
+              shape: Border.all(
+                color: Colors.white,
+                width: 2,
+              ),
+              borderOnForeground: true,
+              elevation: 4,
+              color: Colors.white60,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 4),
+                    child: TextField(
+                      decoration: InputDecoration(labelText: 'Title'),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 4),
+                    child: TextField(
+                      decoration: InputDecoration(labelText: 'Amount'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Add transaction'),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -75,7 +112,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                   borderOnForeground: true,
                   elevation: 4,
-                  color: Colors.orangeAccent,
+                  color: Colors.white60,
                   child: Row(
                     children: [
                       Expanded(
@@ -85,7 +122,13 @@ class MyHomePage extends StatelessWidget {
                             horizontal: 8,
                             vertical: 16,
                           ),
-                          child: Text('${transaction.amount} руб.'),
+                          child: Text(
+                            '${transaction.amount} \$',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                       Expanded(
@@ -95,12 +138,24 @@ class MyHomePage extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Text(transaction.title),
+                              child: Text(
+                                transaction.title,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
-                            Text('${transaction.date}'),
+                            Text(
+                              DateFormat.yMMMMd().format(transaction.date),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.black54,
+                              ),
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 );
