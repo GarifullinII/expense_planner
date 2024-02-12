@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function(String, double) newTransaction;
 
-  NewTransaction({
+  const NewTransaction({
     required this.newTransaction,
     super.key,
   });
 
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
+
   final amountController = TextEditingController();
 
   void addTransaction() {
@@ -19,7 +25,9 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    newTransaction(enteredTitle, enteredAmount);
+    widget.newTransaction(enteredTitle, enteredAmount);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -30,7 +38,7 @@ class NewTransaction extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
+            padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(
