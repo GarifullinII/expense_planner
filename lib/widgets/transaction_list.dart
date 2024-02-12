@@ -19,7 +19,7 @@ class TransactionList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Card(
             shape: Border.all(
-              color: Colors.white,
+              color: Colors.black26,
               width: 2,
             ),
             borderOnForeground: true,
@@ -35,7 +35,7 @@ class TransactionList extends StatelessWidget {
                       vertical: 16,
                     ),
                     child: Text(
-                      '${userTransaction[index].amount} \$',
+                      '${userTransaction[index].amount.toStringAsFixed(2)} \$',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
