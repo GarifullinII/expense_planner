@@ -32,48 +32,54 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white60,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Card(
+        elevation: 5,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  labelText: 'Title',
+                  fillColor: Theme.of(context).primaryColor,
                 ),
-                labelText: 'Title',
-                fillColor: Colors.white,
+                controller: titleController,
+                onSubmitted: (_) => addTransaction(),
               ),
-              controller: titleController,
-              onSubmitted: (_) => addTransaction(),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+            Padding(
+              padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  labelText: 'Amount',
                 ),
-                labelText: 'Amount',
+                controller: amountController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => addTransaction(),
               ),
-              controller: amountController,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => addTransaction(),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: ElevatedButton(
-              onPressed: addTransaction,
-              child: const Text('Add transaction'),
-            ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: ElevatedButton(
+                onPressed: addTransaction,
+                child: Text(
+                  'Add transaction',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -14,10 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Personal expenses',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primaryColor: Colors.white,
+        fontFamily: 'OpenSans',
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
       ),
       home: const MyHomePage(),
     );
@@ -33,24 +40,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transaction = [
-    Transaction(
-      id: 't1',
-      title: 'Milk',
-      amount: 98.20,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'PC',
-      amount: 200100,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Soap',
-      amount: 68.90,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Milk',
+    //   amount: 98.20,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'PC',
+    //   amount: 200100,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't3',
+    //   title: 'Soap',
+    //   amount: 68.90,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _userTransaction(String txTitle, double txAmount) {
@@ -82,7 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('expense planner'),
+        title: const Text('Personal expenses'),
+        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
             onPressed: () {
@@ -96,11 +104,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 4, top: 4, right: 4),
+            Padding(
+              padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
               child: Card(
+                color: Theme.of(context).primaryColor,
                 elevation: 4,
-                child: Padding(
+                child: const Padding(
                   padding: EdgeInsets.all(4),
                   child: Text('COST CHART'),
                 ),
