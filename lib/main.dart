@@ -1,3 +1,4 @@
+import 'package:expense_planner/widgets/chart.dart';
 import 'package:expense_planner/widgets/new_transaction.dart';
 import 'package:expense_planner/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
@@ -109,9 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Card(
                 color: Theme.of(context).primaryColor,
                 elevation: 4,
-                child: const Padding(
-                  padding: EdgeInsets.all(4),
-                  child: Text('COST CHART'),
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Chart(recentTransactions: _transaction,),
                 ),
               ),
             ),
