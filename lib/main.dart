@@ -61,6 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  List<Transaction> get _recentTransactions {
+    return _transaction.where(
+      (element) {
+        return element.date.isAfter(
+          DateTime.now().subtract(
+            const Duration(days: 7),
+          ),
+        );
+      },
+    ).toList();
+  }
+
   void _userTransaction(String txTitle, double txAmount) {
     final txTransaction = Transaction(
       id: DateTime.now().toString(),
@@ -112,7 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 elevation: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(4),
-                  child: Chart(recentTransactions: _transaction,),
+                  child: Chart(
+                    recentTransactions: _recentTransactions,
+                  ),
                 ),
               ),
             ),

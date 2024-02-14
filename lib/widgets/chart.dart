@@ -1,3 +1,4 @@
+import 'package:expense_planner/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
@@ -13,28 +14,47 @@ class Chart extends StatelessWidget {
       (index) {
         final weekDay = DateTime.now().subtract(Duration(days: index));
         double totalSum = 0.0;
-        recentTransactions.map((transaction) {
-          if (transaction.date.day == weekDay.day &&
-              transaction.date.month == weekDay.month &&
-              transaction.date.year == weekDay.year) {
-            totalSum += transaction.amount;
-          }
-        });
-        // TODO
-        print(DateFormat.E(weekDay));
-        print(totalSum);
 
-        return {'day': DateFormat.E(weekDay), 'amount': totalSum};
+        for (var i = 0; i < recentTransactions.length; i++) {
+          if (recentTransactions[i].date.day == weekDay.day &&
+              recentTransactions[i].date.month == weekDay.month &&
+              recentTransactions[i].date.year == weekDay.year) {
+            totalSum += recentTransactions[i].amount;
+          }
+        }
+
+        return {
+          'day': DateFormat.E().format(weekDay).substring(0, 1),
+          'amount': totalSum
+        };
       },
     );
   }
 
+  double get maxSpending {
+    return groupedTransactionValues.fold(0.0, (sum, element) {
+      return sum + (element['amount'] as double);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Card(
       elevation: 6,
-      margin: EdgeInsets.all(20),
-      child: Row(),
+      margin: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: groupedTransactionValues.map((data) {
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: ChartBar(
+              label: data['day'] as String,
+              spendingAmount: data['amount'] as double,
+              spendingPctOfTotal: maxSpending,
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
