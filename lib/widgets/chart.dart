@@ -28,7 +28,7 @@ class Chart extends StatelessWidget {
           'amount': totalSum
         };
       },
-    );
+    ).reversed.toList();
   }
 
   double get maxSpending {
@@ -42,18 +42,21 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: groupedTransactionValues.map((data) {
-          return Padding(
-            padding: const EdgeInsets.all(10),
-            child: ChartBar(
-              label: data['day'] as String,
-              spendingAmount: data['amount'] as double,
-              spendingPctOfTotal: maxSpending,
-            ),
-          );
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: groupedTransactionValues.map((data) {
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: ChartBar(
+                label: data['day'] as String,
+                spendingAmount: data['amount'] as double,
+                spendingPctOfTotal: maxSpending == 0.0 ? 0.0 : ((data['amount'] as double) / maxSpending),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
