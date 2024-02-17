@@ -4,9 +4,11 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> userTransaction;
+  final Function deleteTransaction;
 
   const TransactionList({
     required this.userTransaction,
+    required this.deleteTransaction,
     super.key,
   });
 
@@ -35,56 +37,50 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemCount: userTransaction.length,
               itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  shape: Border.all(
-                    color: Colors.black26,
-                    width: 2,
-                  ),
-                  borderOnForeground: true,
-                  elevation: 4,
-                  color: Theme.of(context).primaryColor,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 16,
-                          ),
-                          child: Text(
-                            '${userTransaction[index].amount.toStringAsFixed(2)} \$',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                return Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Card(
+                    shape: Border.all(
+                      color: Colors.white10,
+                      width: 2,
+                    ),
+                    borderOnForeground: true,
+                    elevation: 4,
+                    color: Theme.of(context).primaryColor,
+                    child: ListTile(
+                      leading: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Text(
+                          '${userTransaction[index].amount.toStringAsFixed(2)} \$',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Text(
-                                userTransaction[index].title,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Text(
-                                DateFormat.yMMMMd()
-                                    .format(userTransaction[index].date),
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                            ),
-                          ],
+                      title: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Text(
+                          userTransaction[index].title,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
-                    ],
+                      subtitle: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Text(
+                          DateFormat.yMMMMd()
+                              .format(userTransaction[index].date),
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.delete_sharp,
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                        onPressed: () => deleteTransaction(userTransaction[index].id),
+                      ),
+                    ),
                   ),
                 );
               },
