@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
-  final Function(String, double) newTransaction;
+  final Function(String, double, DateTime) newTransaction;
 
   const NewTransaction({
     required this.newTransaction,
@@ -21,12 +21,13 @@ class _NewTransactionState extends State<NewTransaction> {
   void _addTransaction() {
     final enteredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
+    final enteredDate = _selectedDate;
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
 
-    widget.newTransaction(enteredTitle, enteredAmount);
+    widget.newTransaction(enteredTitle, enteredAmount, enteredDate);
 
     Navigator.of(context).pop();
   }
@@ -89,8 +90,10 @@ class _NewTransactionState extends State<NewTransaction> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
-                  Text(
-                    DateFormat.yMd().format(_selectedDate),
+                  Expanded(
+                    child: Text(
+                      'Picked Date: ${DateFormat.yMd().format(_selectedDate)} ',
+                    ),
                   ),
                   TextButton(
                       onPressed: presentDatePicker,
