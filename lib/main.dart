@@ -108,19 +108,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Personal expenses'),
+      backgroundColor: Theme.of(context).primaryColor,
+      actions: [
+        IconButton(
+          onPressed: () {
+            _addNewTransaction(context);
+          },
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personal expenses'),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          IconButton(
-            onPressed: () {
-              _addNewTransaction(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -132,13 +134,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 elevation: 4,
                 child: Padding(
                   padding: const EdgeInsets.all(4),
-                  child: Chart(
-                    recentTransactions: _recentTransactions,
+                  child: SizedBox(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height) *
+                        0.4 - MediaQuery.of(context).padding.top,
+                    child: Chart(
+                      recentTransactions: _recentTransactions,
+                    ),
                   ),
                 ),
               ),
             ),
-            TransactionList(userTransaction: _transaction, deleteTransaction: _deleteTransaction),
+            SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height) *
+                    0.6,
+                child: TransactionList(
+                    userTransaction: _transaction,
+                    deleteTransaction: _deleteTransaction)),
           ],
         ),
       ),
