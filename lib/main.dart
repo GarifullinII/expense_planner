@@ -61,6 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  late bool _showChart = false;
+
   List<Transaction> get _recentTransactions {
     return _transaction.where(
       (element) {
@@ -127,31 +129,47 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
-              child: Card(
-                color: Theme.of(context).primaryColor,
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: SizedBox(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Show chart'),
+                Switch(
+                  value: _showChart,
+                  onChanged: (val) {
+                    _showChart = val;
+                    setState(() {});
+                  },
+                )
+              ],
+            ),
+            _showChart
+                ? Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
+                    child: Card(
+                      color: Theme.of(context).primaryColor,
+                      elevation: 4,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: SizedBox(
+                          height: (MediaQuery.of(context).size.height -
+                                      appBar.preferredSize.height) *
+                                  0.7 -
+                              MediaQuery.of(context).padding.top,
+                          child: Chart(
+                            recentTransactions: _recentTransactions,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height) *
-                        0.3 - MediaQuery.of(context).padding.top,
-                    child: Chart(
-                      recentTransactions: _recentTransactions,
-                    ),
+                        0.7,
+                    child: TransactionList(
+                        userTransaction: _transaction,
+                        deleteTransaction: _deleteTransaction),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height) *
-                    0.7,
-                child: TransactionList(
-                    userTransaction: _transaction,
-                    deleteTransaction: _deleteTransaction)),
           ],
         ),
       ),
