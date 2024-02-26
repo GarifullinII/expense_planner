@@ -14,6 +14,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return userTransaction.isEmpty
         ? LayoutBuilder(
             builder: (context, constraints) {
@@ -74,7 +75,7 @@ class TransactionList extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
-                    trailing: MediaQuery.of(context).size.width > 460
+                    trailing: mediaQuery.size.width > 460
                         ? ElevatedButton.icon(
                             onPressed: () =>
                                 deleteTransaction(userTransaction[index].id),
