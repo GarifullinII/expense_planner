@@ -50,68 +50,81 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Card(
-        elevation: 5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  labelText: 'Title',
-                  fillColor: Theme.of(context).primaryColor,
-                ),
-                controller: _titleController,
-                onSubmitted: (_) => _addTransaction(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  labelText: 'Amount',
-                ),
-                controller: _amountController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                onSubmitted: (_) => _addTransaction(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
+    return SingleChildScrollView(
+      child: Padding(
+          padding: EdgeInsets.only(
+            left: 10,
+            top: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Expanded(
-                    child: Text(
-                      'Picked Date: ${DateFormat.yMd().format(_selectedDate)} ',
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        labelText: 'Title',
+                        fillColor: Theme.of(context).primaryColor,
+                      ),
+                      controller: _titleController,
+                      onSubmitted: (_) => _addTransaction(),
                     ),
                   ),
-                  TextButton(
-                      onPressed: presentDatePicker,
-                      child: const Text('Choose date')),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 8, right: 4),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        labelText: 'Amount',
+                      ),
+                      controller: _amountController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      onSubmitted: (_) => _addTransaction(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Picked Date: ${DateFormat.yMd().format(_selectedDate)} ',
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: presentDatePicker,
+                            child: const Text('Choose date')),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ElevatedButton(
+                      onPressed: _addTransaction,
+                      child: Text(
+                        'Add transaction',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: ElevatedButton(
-                onPressed: _addTransaction,
-                child: Text(
-                  'Add transaction',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );

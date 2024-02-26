@@ -110,6 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text('Personal expenses'),
       backgroundColor: Theme.of(context).primaryColor,
@@ -122,54 +124,66 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
-
+    final txListWidget = SizedBox(
+      height:
+          (MediaQuery.of(context).size.height - appBar.preferredSize.height) *
+              0.7,
+      child: TransactionList(
+          userTransaction: _transaction, deleteTransaction: _deleteTransaction),
+    );
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Show chart'),
-                Switch(
-                  value: _showChart,
-                  onChanged: (val) {
-                    _showChart = val;
-                    setState(() {});
-                  },
-                )
-              ],
-            ),
-            _showChart
-                ? Padding(
-                    padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
-                    child: Card(
-                      color: Theme.of(context).primaryColor,
-                      elevation: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: SizedBox(
-                          height: (MediaQuery.of(context).size.height -
-                                      appBar.preferredSize.height) *
-                                  0.7 -
-                              MediaQuery.of(context).padding.top,
-                          child: Chart(
-                            recentTransactions: _recentTransactions,
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Show chart'),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (val) {
+                      _showChart = val;
+                      setState(() {});
+                    },
+                  )
+                ],
+              ),
+            if (!isLandscape)
+              SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height) *
+                        0.3 -
+                    MediaQuery.of(context).padding.top,
+                child: Chart(
+                  recentTransactions: _recentTransactions,
+                ),
+              ),
+            if (!isLandscape) txListWidget,
+            if (isLandscape)
+              _showChart
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
+                      child: Card(
+                        color: Theme.of(context).primaryColor,
+                        elevation: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: SizedBox(
+                            height: (MediaQuery.of(context).size.height -
+                                        appBar.preferredSize.height) *
+                                    0.7 -
+                                MediaQuery.of(context).padding.top,
+                            child: Chart(
+                              recentTransactions: _recentTransactions,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                : SizedBox(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height) *
-                        0.7,
-                    child: TransactionList(
-                        userTransaction: _transaction,
-                        deleteTransaction: _deleteTransaction),
-                  ),
+                    )
+                  : txListWidget,
           ],
         ),
       ),

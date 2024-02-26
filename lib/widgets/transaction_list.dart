@@ -15,25 +15,27 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return userTransaction.isEmpty
-        ? LayoutBuilder(builder: (context, constraints) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    'No transaction added yet!',
-                    style: Theme.of(context).textTheme.titleLarge,
+        ? LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      'No transaction added yet!',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
                   ),
-                ),
-                Image.asset(
-                  'assets/images/sleep.png',
-                  height: constraints.maxHeight*0.7,
-                  width: constraints.maxWidth*0.7,
-                ),
-              ],
-            );
-          },)
+                  Image.asset(
+                    'assets/images/sleep.png',
+                    height: constraints.maxHeight * 0.7,
+                    width: constraints.maxWidth * 0.7,
+                  ),
+                ],
+              );
+            },
+          )
         : ListView.builder(
             itemCount: userTransaction.length,
             itemBuilder: (BuildContext context, int index) {
@@ -72,14 +74,24 @@ class TransactionList extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(
-                        Icons.delete_sharp,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                      onPressed: () =>
-                          deleteTransaction(userTransaction[index].id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 460
+                        ? ElevatedButton.icon(
+                            onPressed: () =>
+                                deleteTransaction(userTransaction[index].id),
+                            icon: Icon(
+                              Icons.delete_sharp,
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                            label: const Text('Delete'),
+                          )
+                        : IconButton(
+                            icon: Icon(
+                              Icons.delete_sharp,
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                            onPressed: () =>
+                                deleteTransaction(userTransaction[index].id),
+                          ),
                   ),
                 ),
               );
