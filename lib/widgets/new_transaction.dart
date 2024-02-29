@@ -1,3 +1,4 @@
+import 'package:expense_planner/widgets/platform_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -53,12 +54,12 @@ class _NewTransactionState extends State<NewTransaction> {
     final mediaQuery = MediaQuery.of(context);
     return SingleChildScrollView(
       child: Padding(
-          padding: EdgeInsets.only(
-            left: 10,
-            top: 10,
-            right: 10,
-            bottom: mediaQuery.viewInsets.bottom + 10,
-          ),
+        padding: EdgeInsets.only(
+          left: 10,
+          top: 10,
+          right: 10,
+          bottom: mediaQuery.viewInsets.bottom + 10,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Card(
@@ -114,12 +115,8 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: ElevatedButton(
-                      onPressed: _addTransaction,
-                      child: Text(
-                        'Add transaction',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
+                    child: PlatformButton(
+                      handler: () => _addTransaction,
                     ),
                   )
                 ],
