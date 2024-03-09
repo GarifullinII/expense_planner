@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
-class TransactionCard extends StatelessWidget {
-  final List<Transaction> userTransaction;
-  final int index;
+class TransactionItem extends StatelessWidget {
+  final Transaction transaction;
   final Function deleteTransaction;
 
-  const TransactionCard({
+  const TransactionItem({
     super.key,
-    required this.userTransaction,
-    required this.index,
+    required this.transaction,
     required this.deleteTransaction,
   });
 
@@ -29,7 +27,7 @@ class TransactionCard extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.all(4),
           child: Text(
-            '${userTransaction[index].amount.toStringAsFixed(2)} \$',
+            '${transaction.amount.toStringAsFixed(2)} \$',
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -39,20 +37,20 @@ class TransactionCard extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.all(4),
           child: Text(
-            userTransaction[index].title,
+            transaction.title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.all(4),
           child: Text(
-            DateFormat.yMMMMd().format(userTransaction[index].date),
+            DateFormat.yMMMMd().format(transaction.date),
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         trailing: mediaQuery.size.width > 460
             ? ElevatedButton.icon(
-                onPressed: () => deleteTransaction(userTransaction[index].id),
+                onPressed: () => deleteTransaction(transaction.id),
                 icon: Icon(
                   Icons.delete_sharp,
                   color: Theme.of(context).colorScheme.error,
@@ -64,7 +62,7 @@ class TransactionCard extends StatelessWidget {
                   Icons.delete_sharp,
                   color: Theme.of(context).colorScheme.error,
                 ),
-                onPressed: () => deleteTransaction(userTransaction[index].id),
+                onPressed: () => deleteTransaction(transaction.id),
               ),
       ),
     );

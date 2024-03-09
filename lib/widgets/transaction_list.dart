@@ -1,4 +1,4 @@
-import 'package:expense_planner/widgets/transaction_card.dart';
+import 'package:expense_planner/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 
@@ -42,9 +42,8 @@ class TransactionList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.all(4),
-                child: TransactionCard(
-                  userTransaction: userTransaction,
-                  index: index,
+                child: TransactionItem(
+                  transaction: userTransaction[index],
                   deleteTransaction: deleteTransaction,
                 ),
               );
