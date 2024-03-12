@@ -5,16 +5,44 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function(String, double, DateTime) newTransaction;
 
-  const NewTransaction({
+  NewTransaction({
     required this.newTransaction,
     super.key,
-  });
+  }) {
+    print('Constructor NewTransaction widget');
+  }
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  State<NewTransaction> createState() {
+    print('createState NewTransaction widget');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+
+  _NewTransactionState() {
+    print('Constructor _NewTransactionState');
+  }
+
+  @override
+  void initState() {
+    print('initState()');
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant NewTransaction oldWidget) {
+    print('didUpdateWidget');
+    super.didUpdateWidget(oldWidget);
+  }
+
+@override
+  void dispose() {
+    print('dispose()');
+    super.dispose();
+  }
+
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   late DateTime _selectedDate = DateTime.now();

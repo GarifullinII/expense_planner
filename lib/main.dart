@@ -40,7 +40,29 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    print(state);
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   final List<Transaction> _transaction = [
     // Transaction(
     //   id: 't1',
@@ -109,6 +131,69 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  List<Widget> _buildLandscapeContent(
+    MediaQueryData mediaQuery,
+    AppBar appBar,
+    Widget txListWidget,
+  ) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Show chart',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Switch(
+            value: _showChart,
+            onChanged: (val) {
+              _showChart = val;
+              setState(() {});
+            },
+          )
+        ],
+      ),
+      _showChart
+          ? Padding(
+              padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
+              child: Card(
+                color: Theme.of(context).primaryColor,
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: SizedBox(
+                    height:
+                        (mediaQuery.size.height - appBar.preferredSize.height) *
+                                0.7 -
+                            mediaQuery.padding.top,
+                    child: Chart(
+                      recentTransactions: _recentTransactions,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : txListWidget,
+    ];
+  }
+
+  List<Widget> _buildPortraitContent(
+    MediaQueryData mediaQuery,
+    AppBar appBar,
+    Widget txListWidget,
+  ) {
+    return [
+      SizedBox(
+        height: (mediaQuery.size.height - appBar.preferredSize.height) * 0.3 -
+            mediaQuery.padding.top,
+        child: Chart(
+          recentTransactions: _recentTransactions,
+        ),
+      ),
+      txListWidget,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     print('build() _MyHomePageState');
@@ -154,53 +239,17 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Show chart',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (val) {
-                      _showChart = val;
-                      setState(() {});
-                    },
-                  )
-                ],
+              ..._buildLandscapeContent(
+                mediaQuery,
+                appBar,
+                txListWidget,
               ),
             if (!isLandscape)
-              SizedBox(
-                height:
-                    (mediaQuery.size.height - appBar.preferredSize.height) * 0.3 -
-                        mediaQuery.padding.top,
-                child: Chart(
-                  recentTransactions: _recentTransactions,
-                ),
+              ..._buildPortraitContent(
+                mediaQuery,
+                appBar,
+                txListWidget,
               ),
-            if (!isLandscape) txListWidget,
-            if (isLandscape)
-              _showChart
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 4, top: 4, right: 4),
-                      child: Card(
-                        color: Theme.of(context).primaryColor,
-                        elevation: 4,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: SizedBox(
-                            height: (mediaQuery.size.height -
-                                        appBar.preferredSize.height) *
-                                    0.7 -
-                                mediaQuery.padding.top,
-                            child: Chart(
-                              recentTransactions: _recentTransactions,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  : txListWidget,
           ],
         ),
       ),
